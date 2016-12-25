@@ -6,5 +6,5 @@ import expensemanager.dto.User;
 
 public interface UserRepository extends CrudRepository<User, String> {
 	
-	public User findByUserName(String name);
+	public User findByName(String name);
 }

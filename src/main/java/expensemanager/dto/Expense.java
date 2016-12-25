@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Expense {
@@ -16,6 +17,7 @@ public class Expense {
 	private String item;
 	private String description;
 	private double amount;
+	@OneToOne(orphanRemoval=false)
 	private User user;
 	private Date date;
 	
