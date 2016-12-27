@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import expensemanager.dto.Credentials;
 
 public interface CredentialsReporitory extends CrudRepository<Credentials, String> {
-	//Empty Block
+	//EMPTY Body
 }

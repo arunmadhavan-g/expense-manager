@@ -3,6 +3,7 @@ package expensemanager.operations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import expensemanager.dto.Credentials;
 import expensemanager.dto.User;
 import expensemanager.dto.UserTO;
 import expensemanager.persistence.repository.CredentialsReporitory;
@@ -22,11 +23,18 @@ public class UserOperations {
 		return userRepository.save(user.getUser());
 	}
 	
-	public User login(String email, String password){
-		if(credentialsRepository.findOne(email).isAuthenticated(password))
-			return userRepository.findByName(email);
+	public User login(Credentials credentials){
+		if(credentialsRepository.findOne(credentials.getUserId()).equals(credentials))
+			return userRepository.findByEmail(credentials.getUserId());
 		
 		throw new RuntimeException("User Not Authenticated.");
+	}
+	
+	public void printAllUsers(){
+		Iterable<User> users = userRepository.findAll();
+		for(User user:users){
+			System.out.println(user);
+		}
 	}
 	
 }

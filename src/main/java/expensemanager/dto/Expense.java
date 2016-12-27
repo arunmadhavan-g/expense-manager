@@ -1,11 +1,16 @@
 package expensemanager.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -13,11 +18,13 @@ public class Expense {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="expense_id")
 	private String id;
 	private String item;
 	private String description;
 	private double amount;
-	@OneToOne(orphanRemoval=false)
+	@OneToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="user_id")
 	private User user;
 	private Date date;
 	
@@ -59,6 +66,15 @@ public class Expense {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public void setDate(String dateStr, String pattern) {
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+		try {
+			this.date = format.parse(dateStr);
+		} catch (ParseException e) {
+			throw new RuntimeException(String.format("Issue Parsing Date %s of format %s", dateStr, pattern));
+		}
 	}
 	
 }

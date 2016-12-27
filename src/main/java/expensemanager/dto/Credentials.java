@@ -34,8 +34,14 @@ public class Credentials {
 		this.password = password;
 	}
 
-	public boolean isAuthenticated(String password) {
-		return this.password.equals(password);
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Credentials){
+			Credentials that = (Credentials)obj;
+			return that.userId.equals(this.userId) &&
+					that.password.equals(this.password);
+		}
+		return false;
 	}
 	
 }

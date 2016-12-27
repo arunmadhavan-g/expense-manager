@@ -3,6 +3,7 @@ package expensemanager.dto;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,10 +17,11 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="user_id")
 	private String id;
 	private String name;
 	private String email;
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true, mappedBy="id", fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true, mappedBy="user", fetch=FetchType.LAZY)
 	private List<Expense> expenses;
 	
 	public User() {
@@ -58,6 +60,11 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Name:%s, Id:%s, Email: %s", name, id, email);
 	}
 	
 }
